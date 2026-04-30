@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		DB6458692F9F5BC7004CBED5 /* Croquette.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Croquette.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB6458692F9F5BC7004CBED5 /* Croqe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Croqe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		DB64586B2F9F5BC7004CBED5 /* Croquette */ = {
+		DB64586B2F9F5BC7004CBED5 /* Croqe */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Croquette;
+			path = Croqe;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +32,7 @@
 		DB6458602F9F5BC7004CBED5 = {
 			isa = PBXGroup;
 			children = (
-				DB64586B2F9F5BC7004CBED5 /* Croquette */,
+				DB64586B2F9F5BC7004CBED5 /* Croqe */,
 				DB64586A2F9F5BC7004CBED5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -40,7 +40,7 @@
 		DB64586A2F9F5BC7004CBED5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DB6458692F9F5BC7004CBED5 /* Croquette.app */,
+				DB6458692F9F5BC7004CBED5 /* Croqe.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,9 +48,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DB6458682F9F5BC7004CBED5 /* Croquette */ = {
+		DB6458682F9F5BC7004CBED5 /* Croqe */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DB6458742F9F5BC8004CBED5 /* Build configuration list for PBXNativeTarget "Croquette" */;
+			buildConfigurationList = DB6458742F9F5BC8004CBED5 /* Build configuration list for PBXNativeTarget "Croqe" */;
 			buildPhases = (
 				DB6458652F9F5BC7004CBED5 /* Sources */,
 				DB6458662F9F5BC7004CBED5 /* Frameworks */,
@@ -61,13 +61,13 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				DB64586B2F9F5BC7004CBED5 /* Croquette */,
+				DB64586B2F9F5BC7004CBED5 /* Croqe */,
 			);
-			name = Croquette;
+			name = Croqe;
 			packageProductDependencies = (
 			);
 			productName = Croquette;
-			productReference = DB6458692F9F5BC7004CBED5 /* Croquette.app */;
+			productReference = DB6458692F9F5BC7004CBED5 /* Croqe.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -85,7 +85,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DB6458642F9F5BC7004CBED5 /* Build configuration list for PBXProject "Croquette" */;
+			buildConfigurationList = DB6458642F9F5BC7004CBED5 /* Build configuration list for PBXProject "Croqe" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -99,7 +99,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DB6458682F9F5BC7004CBED5 /* Croquette */,
+				DB6458682F9F5BC7004CBED5 /* Croqe */,
 			);
 		};
 /* End PBXProject section */
@@ -309,7 +309,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DB6458642F9F5BC7004CBED5 /* Build configuration list for PBXProject "Croquette" */ = {
+		DB6458642F9F5BC7004CBED5 /* Build configuration list for PBXProject "Croqe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DB6458722F9F5BC8004CBED5 /* Debug */,
@@ -318,7 +318,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DB6458742F9F5BC8004CBED5 /* Build configuration list for PBXNativeTarget "Croquette" */ = {
+		DB6458742F9F5BC8004CBED5 /* Build configuration list for PBXNativeTarget "Croqe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DB6458752F9F5BC8004CBED5 /* Debug */,

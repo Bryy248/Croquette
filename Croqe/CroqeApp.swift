@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct CroquetteApp: App {
+struct CroqeApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
