@@ -12,6 +12,7 @@ struct ContentView: View {
         ZStack() {
             // Background Color Layer
             Color.backgroundMint
+                .ignoresSafeArea()
             
             // Second Layer
             VStack (spacing: 16) {

@@ -6,14 +6,15 @@
 //
 
 import SwiftUI
-import AppMigrationKit
 
 struct RowCard: View {
+    let rowNumber: Int
     @State private var selectedOption = "Single Crochet (SC0)"
     let options = ["Single Crochet (SC0)", "Double Crochet (DC0)", "Half Double Crochet (HDC0)"]
+    
     var body: some View {
         HStack {
-            Text("Row 1")
+            Text("Row \(rowNumber)")
             
             Spacer()
             
@@ -24,11 +25,18 @@ struct RowCard: View {
                     }
                 }
             }
+            
+            
+            Text("Stitches")
         }
         .padding(16)
     }
 }
 
 #Preview {
-    RowCard()
+    VStack(spacing: 8) {
+        ForEach(1...5, id: \.self) { row in
+            RowCard(rowNumber: row)
+        }
+    }
 }
