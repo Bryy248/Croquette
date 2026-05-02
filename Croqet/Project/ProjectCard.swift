@@ -7,7 +7,10 @@
 
 import SwiftUI
 
-struct HistoryCard: View {
+struct ProjectCard: View {
+    let projects: TemporaryProject
+    var onDelete: (() -> Void)?
+    
     var body: some View {
         HStack() {
             Rectangle()
@@ -21,7 +24,7 @@ struct HistoryCard: View {
             
             VStack(alignment: .leading) {
                 // String
-                Text("Taplak")
+                Text(projects.name)
                     .font(.system(size:30))
                     .foregroundColor(.secondary)
                 
@@ -33,9 +36,22 @@ struct HistoryCard: View {
             
             Spacer()
         }
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.white)
+                .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
+        )
+        .swipeActions{
+            Button(role: .destructive) {
+                onDelete?()
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+        }
     }
 }
 
 #Preview {
-    HistoryCard()
+    ProjectCard(projects: (TemporaryProject(name: "tapak")))
 }
