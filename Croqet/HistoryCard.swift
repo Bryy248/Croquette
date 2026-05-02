@@ -33,7 +33,6 @@ struct HistoryCard: View {
             
             Spacer()
         }
-        .padding(16)
     }
 }
 
