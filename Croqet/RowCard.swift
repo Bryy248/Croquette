@@ -18,18 +18,14 @@ struct RowCard: View {
             
             Spacer()
             
-            VStack {
-                Picker("Apperance:", selection: $selectedOption) {
-                    ForEach(options, id: \.self) { option in
-                        Text(option)
-                    }
+            Picker("Apperance:", selection: $selectedOption) {
+                ForEach(options, id: \.self) { option in
+                    Text(option)
                 }
             }
             
-            
             Text("Stitches")
         }
-        .padding(16)
     }
 }
 

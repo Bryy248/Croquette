@@ -16,7 +16,7 @@ struct TemporaryProject: Identifiable {
 struct ContentView: View {
     // Temporary
     @State private var projects: [TemporaryProject] =  [TemporaryProject(name: "tapak")]
-    // []
+      //[]
     
     // Delete function
     private func deleteProject(_ project: TemporaryProject) {
@@ -24,6 +24,8 @@ struct ContentView: View {
             projects.removeAll { $0.id == project.id }
         }
     }
+    
+    @State private var newProjectNavigate: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -43,17 +45,37 @@ struct ContentView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
                     VStack(alignment: .leading, spacing: 16) {
-                        Text("Projects")
-                            .bold()
-                            .font(.system(size: 36))
                         
                         if projects.isEmpty {
-                            Text("No existing project.")
-                                .fontWeight(.semibold)
-                                .font(Font.system(size: 16))
-                                .foregroundStyle(.gray)
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Projects")
+                                    .bold()
+                                    .font(.system(size: 36))
+                                
+                                Text("No existing project.")
+                                    .fontWeight(.semibold)
+                                    .font(Font.system(size: 16))
+                                    .foregroundStyle(.gray)
+                            }
                         }
                         else {
+                            HStack {
+                                Text("Projects")
+                                    .bold()
+                                    .font(.system(size: 36))
+                                Spacer()
+                                Button {
+                                    newProjectNavigate = true
+                                } label: {
+                                    Image(systemName: "plus")
+                                        .foregroundStyle(.blue)
+                                }
+                                .buttonStyle(.glass)
+                                .tint(.blue)
+                                .controlSize(ControlSize.large)
+                                .buttonBorderShape(.circle)
+
+                            }
                             List {
                                 ForEach($projects) { $project in
                                     NavigationLink(destination: ProjectDetailView(project: project)) {
@@ -88,7 +110,7 @@ struct ContentView: View {
                                 .foregroundStyle(.primary)
                             
                             CroqetButton(title: "Add Project") {
-                                
+                                newProjectNavigate = true
                             }
                         }
                     }
@@ -99,6 +121,9 @@ struct ContentView: View {
                 .padding(16)
             }
             .frame(maxWidth: .infinity , maxHeight: .infinity)
+            .navigationDestination(isPresented: $newProjectNavigate) {
+                NewProjectView()
+            }
         }
     }
 }
