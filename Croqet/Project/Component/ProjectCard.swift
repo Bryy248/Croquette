@@ -37,11 +37,7 @@ struct ProjectCard: View {
             Spacer()
         }
         .padding(16)
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.white)
-                .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
-        )
+        .background(BackgroundBorder())
         .swipeActions{
             Button(role: .destructive) {
                 onDelete?()

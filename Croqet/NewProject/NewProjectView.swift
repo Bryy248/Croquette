@@ -52,13 +52,8 @@ struct NewProjectView: View {
                         }
                         .padding(.horizontal, 16)
                         .padding(.vertical, 12)
-                        .background(
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(Color.white)
-                                .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
-                        )
+                        .background(BackgroundBorder())
                         .frame(maxWidth: .infinity)
-                        
                         
                         List {
                             ForEach(1...totalRow, id: \.self) { row in
