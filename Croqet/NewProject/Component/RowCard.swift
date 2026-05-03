@@ -9,22 +9,39 @@ import SwiftUI
 
 struct RowCard: View {
     let rowNumber: Int
-    @State private var selectedOption = "Single Crochet (SC0)"
-    let options = ["Single Crochet (SC0)", "Double Crochet (DC0)", "Half Double Crochet (HDC0)"]
+    @State private var selectedOption = "Single Crochet"
+    let options = ["Single Crochet", "Double Crochet", "Half Double Crochet"]
+    var onDelete: (() -> Void)?
     
     var body: some View {
-        HStack {
+        HStack(alignment: .center, spacing: 12) {
             Text("Row \(rowNumber)")
+                .font(.system(size: 14, weight: .medium))
             
             Spacer()
             
-            Picker("Apperance:", selection: $selectedOption) {
+            Picker("", selection: $selectedOption) {
                 ForEach(options, id: \.self) { option in
                     Text(option)
                 }
             }
+            .font(.system(size: 14))
+            .tint(.gray)
             
             Text("Stitches")
+                .font(.system(size: 14))
+                .foregroundStyle(.secondary)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(BackgroundBorder(showShadow: false))
+        .frame(maxWidth: .infinity)
+        .swipeActions{
+            Button(role: .destructive) {
+                onDelete?()
+            } label: {
+                Label("", systemImage: "trash")
+            }
         }
     }
 }
