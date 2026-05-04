@@ -34,7 +34,7 @@ struct RowCard: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .background(BackgroundBorder(showShadow: false))
+        .background(BackgroundBorder())
         .frame(maxWidth: .infinity)
         .swipeActions{
             Button(role: .destructive) {
