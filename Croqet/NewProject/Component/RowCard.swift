@@ -16,7 +16,7 @@ struct RowCard: View {
     var body: some View {
         HStack(alignment: .center, spacing: 12) {
             Text("Row \(rowNumber)")
-                .font(.system(size: 14, weight: .medium))
+                .font(.system(size: 17, weight: .medium))
             
             Spacer()
             
@@ -27,14 +27,10 @@ struct RowCard: View {
             }
             .font(.system(size: 14))
             .tint(.gray)
-            
-            Text("Stitches")
-                .font(.system(size: 14))
-                .foregroundStyle(.secondary)
+
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .background(BackgroundBorder())
         .frame(maxWidth: .infinity)
         .swipeActions{
             Button(role: .destructive) {

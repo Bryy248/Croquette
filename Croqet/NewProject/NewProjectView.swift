@@ -9,80 +9,79 @@ import SwiftUI
 
 struct NewProjectView: View {
     @State private var name: String = ""
-    @State private var totalRow: Int = 1
+    @State private var totalRow: Int = 5
+    @State private var chain: String = ""
     var body: some View {
         VStack(spacing: 0) {
-            // Scrollable Content
-            ScrollView {
-                VStack(spacing: 8) {
-                    
-                    VStack(){
-                        Rectangle()
-                            .frame(width: 250, height: 200)
-                        
-                        Text("Add Project Cover")
+            List {
+                Section {
+                    HStack {
+                        Text("Name")
+                        TextField("New Project", text: $name)
+                            .multilineTextAlignment(.trailing)
                     }
-                    .padding(.vertical, 4)
-                    
-                    VStack(alignment: .leading) {
-                        Text("Project Name")
-                            .font(Font.body.bold())
-                        TextField("Enter your name", text: $name)
+                    HStack {
+                        Text("Length")
+                        Spacer()
+                        TextField("", text: $chain)
+                            .multilineTextAlignment(.trailing)
+                            .keyboardType(.numberPad)
                             .textFieldStyle(.roundedBorder)
+                            .frame(width: 52, height: 25)
+                        Text("chains")
+                            .foregroundStyle(.secondary)
                     }
-                    .padding(.vertical, 4)
-                    
-                    VStack(alignment: .leading, spacing: 20){
-                        Text("Add Project Detail")
-                            .font(Font.body.bold())
-                        
-                        HStack(alignment: .center, spacing: 12) {
-                            Text("Length")
-                                .font(.system(size: 14, weight: .medium))
-                            
-                            Spacer()
-                            
-                            TextField("Add Chain", text: .constant(""))
-                                .textFieldStyle(.roundedBorder)
-                                .frame(width: 50)
-                            
-                            Text("chains")
-                                .font(.system(size: 14))
-                                .foregroundStyle(.secondary)
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 12)
-                        .background(BackgroundBorder())
-                        .frame(maxWidth: .infinity)
-                        
-                        List {
-                            ForEach(1...totalRow, id: \.self) { row in
-                                RowCard(rowNumber: row)
-                            }
-                            .listRowInsets(EdgeInsets(top: 6, leading: 0, bottom: 6, trailing: 0)) // Spacing antar item
-                            .listRowSeparator(.hidden) // Hilangkan separator
-                            .listRowBackground(Color.clear) // Background transparan
-                        }
-                        .listStyle(.plain)
-                        .scrollContentBackground(.hidden) // Hilangkan background default List
-                        .frame(height: CGFloat(totalRow) * 52)
-                        
-                        Button {
-                            totalRow += 1
-                        } label: {
-                            Text("+ Add Row")
-                        }
-                    }
-                    .padding(.bottom, 16)
+                } header: {
+                    Text("Project Details")
+                        .font(.system(size: 24, weight: .semibold))
+                        .foregroundStyle(.black)
+                        .padding(.bottom, 12)
                 }
-                .padding(16)
+                
+                Section {
+                    ForEach(1...totalRow, id: \.self) { row in
+                        RowCard(rowNumber: row)
+                    }
+                } header: {
+                    HStack {
+                        Text("Rows")
+                            .font(.system(size: 24, weight: .semibold))
+                            .foregroundStyle(.black)
+                        
+                        Spacer()
+                        
+                        HStack {
+                            Button(action: {
+                                totalRow += 1
+                            }) {
+                                Text("+ Add Row")
+                            }
+                        }
+                        .tint(.gray)
+                    }
+                    .padding(.bottom, 12)
+                }
+                
             }
-            CroqetButton(title: "Save Project", colorScheme: "color3") {
+            .listStyle(.insetGrouped)
+            .scrollContentBackground(.hidden)
+            .background(Color.gray.opacity(0.1)) // atau gunakan Color(uiColor: .systemGray6) untuk warna gray sistem
+            
+            Spacer()
+            CroqetButton(title: "Get Assistance", colorScheme: "color5") {
                 
             }
 
         }
         .navigationTitle(Text("New Project"))
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Save") {
+                    
+                    
+                }
+            }
+        }
     }
 }
 
