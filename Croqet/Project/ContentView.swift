@@ -31,7 +31,7 @@ struct ContentView: View {
         NavigationStack {
             ZStack() {
                 // Background Color Layer
-                Color.backgroundMint
+                Color("color2")
                     .ignoresSafeArea()
                 
                 // Second Layer
