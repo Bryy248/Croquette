@@ -15,8 +15,8 @@ struct TemporaryProject: Identifiable {
 
 struct ContentView: View {
     // Temporary
-    @State private var projects: [TemporaryProject] = [TemporaryProject(name: "tapak")]
-      //[]
+    @State private var projects: [TemporaryProject] = [TemporaryProject(name: "Pouch"), TemporaryProject(name: "Coaster"), TemporaryProject(name: "Cake")]
+    //[]
     
     // Delete function
     private func deleteProject(_ project: TemporaryProject) {
@@ -29,91 +29,76 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack() {
-                // Background Color Layer
+            ZStack {
+                // Background Color
                 Color("color2")
                     .ignoresSafeArea()
                 
-                // Second Layer
-                VStack (spacing: 16) {
-                    HStack () {
-                        Image(systemName: "star")
-                            .imageScale(.large)
-                            .foregroundStyle(.tint)
-                        Text("Hi Mia!")
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                // Main Content
+                VStack(spacing: 0) {
+                    // Header
+                    Text("Projects")
+                        .font(.system(size: 36, weight: .bold))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .foregroundStyle(.black)
+                        .padding(.bottom, 24)
                     
-                    VStack(alignment: .leading, spacing: 16) {
-                        Text("Projects")
-                            .bold()
-                            .font(.system(size: 36))
-                        if projects.isEmpty {
-                            VStack(spacing: 16) {
-                                Spacer()
-                                Image(systemName: "star")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 100, height: 100)
-                                
-                                Text("You have no projects yet")
-                                    .fontWeight(.semibold)
-                                    .font(Font.system(size: 24))
-                                    .foregroundStyle(.primary)
-                                
-                                Spacer()
-                                CroqetButton(title: "Add Project", colorScheme: "color3") {
-                                    newProjectNavigate = true
-                                }
-                            }
+                    // Content Area
+                    if projects.isEmpty {
+                        // Empty State
+                        Spacer()
+                        VStack(spacing: 16) {
+                            Image(systemName: "star")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 100, height: 100)
+                                .foregroundStyle(.secondary)
+                            
+                            Text("You have no projects yet")
+                                .font(.system(size: 24, weight: .semibold))
+                                .foregroundStyle(.primary)
                         }
-                        else {
-                            HStack {
-                                Text("Projects")
-                                    .bold()
-                                    .font(.system(size: 36))
-                                Spacer()
-                                Button {
-                                    newProjectNavigate = true
-                                } label: {
-                                    Image(systemName: "plus")
-                                        .foregroundStyle(.blue)
-                                }
-                                .buttonStyle(.glass)
-                                .tint(.blue)
-                                .controlSize(ControlSize.large)
-                                .buttonBorderShape(.circle)
-
-                            }
-                            List {
-                                ForEach($projects) { $project in
-                                    NavigationLink(destination: ProjectDetailView(project: project)) {
+                        Spacer()
+                    } else {
+                        // Projects List
+                        List {
+                            ForEach($projects) { $project in
+                                NavigationLink(destination: ProjectDetailView(project: project)) {
+                                    HStack(){
                                         ProjectCard(projects: project) {
                                             deleteProject(project)
                                         }
+                                        
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .font(.system(size: 20, weight: .semibold))
+                                            .foregroundStyle(.color5)
+                                            .padding(.trailing, 16)
                                     }
-                                    .navigationLinkIndicatorVisibility(.hidden) // Menghilangkan cevron di list
-                                    .listRowInsets(EdgeInsets(top: 6, leading: 0, bottom: 6, trailing: 0)) // Spacing antar item
-                                    .listRowSeparator(.hidden) // Hilangkan separator
-                                    .listRowBackground(Color.clear) // Background transparan
+                                    
                                 }
+                                .listRowInsets(EdgeInsets(top: 6, leading: 0, bottom: 6, trailing: 0)) //spacing antar item
+                                .listRowSeparator(.hidden) //Menghilangkan separator
+                                .listRowBackground(Color.clear) //Background Transparan
+                                .background(BackgroundBorder())
+                                .navigationLinkIndicatorVisibility(.hidden)
                             }
-                            .listStyle(.plain)
-                            .scrollContentBackground(.hidden) // Hilangkan background default List
                         }
+                        .listStyle(.plain)
+                        .scrollContentBackground(.hidden)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    Spacer()
-                    
-                    
+                    // Button at Bottom
+                    CroqetButton(title: "Add Project", colorScheme: "color5") {
+                        newProjectNavigate = true
+                    }
+                    .padding(.top, 16)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 .padding(16)
             }
-            .frame(maxWidth: .infinity , maxHeight: .infinity)
             .navigationDestination(isPresented: $newProjectNavigate) {
                 NewProjectView()
+                
             }
         }
     }
