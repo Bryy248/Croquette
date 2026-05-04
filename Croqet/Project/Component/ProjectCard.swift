@@ -12,42 +12,29 @@ struct ProjectCard: View {
     var onDelete: (() -> Void)?
     
     var body: some View {
-        HStack() {
-            Rectangle()
-                .cornerRadius(20)
-                .frame(width: 72, height: 72)
-                .overlay(
-                    Image(systemName: "person.crop.circle")
-                )
-                .padding(.trailing, 16)
+        VStack(spacing: 10) {
+            // String
+            Text(projects.name)
+                .font(.system(size:20, weight: .semibold))
+                .foregroundColor(.black)
             
-            
-            VStack(alignment: .leading) {
-                // String
-                Text(projects.name)
-                    .font(.system(size:30))
-                    .foregroundColor(.secondary)
-                
-                // Date Format
-                Text("10/10/2020")
-                    .font(.system(size:10))
-                    .foregroundColor(.secondary)
-            }
-            
-            Spacer()
+            // Date Format
+            Text("10/10/2020")
+                .font(.system(size:12))
+                .foregroundColor(.gray)
         }
-        .padding(16)
-        .background(BackgroundBorder())
         .swipeActions{
             Button(role: .destructive) {
                 onDelete?()
             } label: {
-                Label("Delete", systemImage: "trash")
+                Label("", systemImage: "trash")
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+        .padding(20)
     }
 }
 
 #Preview {
-    ProjectCard(projects: (TemporaryProject(name: "tapak")))
+    ProjectCard(projects: (TemporaryProject(name: "Pouch")))
 }
