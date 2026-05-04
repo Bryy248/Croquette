@@ -77,9 +77,10 @@ struct NewProjectView: View {
                 }
                 .padding(16)
             }
-            CroqetButton(title: "Save Project") {
+            CroqetButton(title: "Save Project", colorScheme: "color3") {
                 
             }
+
         }
         .navigationTitle(Text("New Project"))
     }

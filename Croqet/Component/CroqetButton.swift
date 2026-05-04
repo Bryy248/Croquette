@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CroqetButton: View {
     let title: String
+    let colorScheme: String
     let action: () -> Void
     
     var body: some View {
@@ -16,15 +17,15 @@ struct CroqetButton: View {
             Text(title)
                 .font(.system(size: 16, weight: .semibold))
                 .foregroundColor(.white)
-                .frame(width: 125,height: 48)
-                .background(.blue)
+                .frame(width: 361,height: 48)
+                .background(Color(colorScheme))
                 .cornerRadius(12)
         }
     }
 }
 
 #Preview {
-    CroqetButton(title: "Save", action: {
+    CroqetButton(title: "Save", colorScheme: "color3", action: {
         print("Button tapped!")
     })
     .padding()

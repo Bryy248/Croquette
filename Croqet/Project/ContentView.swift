@@ -15,7 +15,7 @@ struct TemporaryProject: Identifiable {
 
 struct ContentView: View {
     // Temporary
-    @State private var projects: [TemporaryProject] =  [TemporaryProject(name: "tapak")]
+    @State private var projects: [TemporaryProject] = [TemporaryProject(name: "tapak")]
       //[]
     
     // Delete function
@@ -45,17 +45,26 @@ struct ContentView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
                     VStack(alignment: .leading, spacing: 16) {
-                        
+                        Text("Projects")
+                            .bold()
+                            .font(.system(size: 36))
                         if projects.isEmpty {
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text("Projects")
-                                    .bold()
-                                    .font(.system(size: 36))
+                            VStack(spacing: 16) {
+                                Spacer()
+                                Image(systemName: "star")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 100, height: 100)
                                 
-                                Text("No existing project.")
+                                Text("You have no projects yet")
                                     .fontWeight(.semibold)
-                                    .font(Font.system(size: 16))
-                                    .foregroundStyle(.gray)
+                                    .font(Font.system(size: 24))
+                                    .foregroundStyle(.primary)
+                                
+                                Spacer()
+                                CroqetButton(title: "Add Project", colorScheme: "color3") {
+                                    newProjectNavigate = true
+                                }
                             }
                         }
                         else {
@@ -97,25 +106,7 @@ struct ContentView: View {
                     
                     Spacer()
                     
-                    if projects.isEmpty {
-                        VStack(spacing: 16) {
-                            Image(systemName: "star")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 100, height: 100)
-                            
-                            Text("What are you making?")
-                                .fontWeight(.semibold)
-                                .font(Font.system(size: 24))
-                                .foregroundStyle(.primary)
-                            
-                            CroqetButton(title: "Add Project") {
-                                newProjectNavigate = true
-                            }
-                        }
-                    }
                     
-                    Spacer()
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 .padding(16)
