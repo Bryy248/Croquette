@@ -43,9 +43,10 @@ struct RowProgressCard: View {
                     
                     Picker("", selection: $row.stitchType) {
                         ForEach(options, id: \.self) { option in
-                            Text(option)
+                            Text(option).font(.subheading)
                         }
                     }
+                    .font(.subheading)
                     .disabled(!isEditable || isLocked || isCompleted)
                     .tint(.black)
                     .opacity(isLocked ? 0.3 : 1.0)

@@ -22,7 +22,7 @@ struct NewProjectView: View {
     
     @State private var showingAlert = false
     var body: some View {
-        NavigationStack {
+//        NavigationStack {
             ZStack {
                 Color("background_color")
                     .ignoresSafeArea()
@@ -35,6 +35,7 @@ struct NewProjectView: View {
                                 TextField("New Project", text: $name)
                                     .multilineTextAlignment(.trailing)
                             }
+                            .font(.subheading)
                             HStack {
                                 Text("Length")
                                 Spacer()
@@ -46,13 +47,15 @@ struct NewProjectView: View {
                                 Text("chains")
                                     .foregroundStyle(.secondary)
                             }
+                            .font(.subheading)
                         } header: {
                             Text("Project Details")
-                                .font(.system(size: 24, weight: .semibold))
+                                .font(.heading)
                                 .foregroundStyle(.black)
                                 .padding(.bottom, 12)
+                                .padding(.leading, -15)
                         }
-                        
+
                         Section {
                             ForEach($rows) { $row in
                                 RowCard(
@@ -62,12 +65,15 @@ struct NewProjectView: View {
                                         rows.removeAll { $0.id == row.id }
                                     }
                                 )
+                                .listRowInsets(EdgeInsets(top: 6, leading: 0, bottom: 6, trailing: 0))
                             }
                         } header: {
                             HStack {
                                 Text("Rows")
-                                    .font(.system(size: 24, weight: .semibold))
+                                    .font(.heading)
                                     .foregroundStyle(.black)
+                                    .padding(.bottom, -5)
+                                    .padding(.leading, -15)
                                 
                                 Spacer()
                                 
@@ -125,9 +131,8 @@ struct NewProjectView: View {
                     }
                 }
             }
-        }
+//        }
     }
-    
 }
 
 #Preview {

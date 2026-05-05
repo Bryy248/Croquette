@@ -15,9 +15,9 @@ struct BackgroundBorder: View {
             .fill(Color.white)
             .shadow(
                 color: showShadow ? .black.opacity(0.1) : .clear,
-                radius: showShadow ? 8 : 0,
+                radius: showShadow ? 1 : 0,
                 x: 0,
-                y: showShadow ? 4 : 0
+                y: showShadow ? 1 : 0
             )
     }
 }
