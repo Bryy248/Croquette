@@ -64,40 +64,38 @@ class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
         sessionQueue.async {
             [weak self] in
             guard let self = self else {return}
-            
+            guard !self.session.isRunning && self.currentInput == nil else { return }
+
             // set session preset
             self.session.beginConfiguration()
             self.session.sessionPreset = .photo
-            
+
             // camera input -> standard rear camera
             guard let camera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back), let input = try? AVCaptureDeviceInput(device: camera) else {
                 print("Failed to access camera.")
                 self.session.commitConfiguration()
                 return
             }
-            
+
             if self.session.canAddInput(input) {
                 self.session.addInput(input)
                 self.currentInput = input
             }
-            
+
             // add photo output
             if self.session.canAddOutput(self.photoOutput){
                 self.session.addOutput(self.photoOutput)
-                
-                self.photoOutput.isHighResolutionCaptureEnabled = true
-                self.photoOutput.maxPhotoQualityPrioritization = .quality
             }
-            
+
             self.session.commitConfiguration() // -> all changes at once
-            
+
             // start the session
             self.session.startRunning()
-            
+
             DispatchQueue.main.async {
                 self.isSessionRunning = self.session.isRunning
             }
-            
+
         }
     }
     
@@ -111,13 +109,8 @@ class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
             
             // config photo settings
             let settings = AVCapturePhotoSettings()
-            settings.flashMode = .auto // i think can be edited
-            
-            // enable hi-res capture
-            
-            if self.photoOutput.isHighResolutionCaptureEnabled{
-                settings.isHighResolutionPhotoEnabled = true
-            }
+            settings.flashMode = .auto
+
             self.photoOutput.capturePhoto(with: settings, delegate: self)
             
         }

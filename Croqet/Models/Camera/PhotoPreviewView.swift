@@ -9,6 +9,7 @@ import SwiftUI
 import AVFoundation
 
 struct PhotoPreviewView: View {
+    @State private var showResult = false
     
     let item: IdentifiableImage
     let onDismiss: () -> Void
@@ -24,9 +25,10 @@ struct PhotoPreviewView: View {
                 Spacer()
                 
                 Button("Save"){ // save to photos
-                    UIImageWriteToSavedPhotosAlbum(item.image, nil, nil, nil)
-                    onDismiss()
-                }
+                    showResult = true
+                    // UIImageWriteToSavedPhotosAlbum(item.image, nil, nil, nil)
+                    // onDismiss()
+                }.padding()
                 
             }
             .background(.ultraThinMaterial)
@@ -36,6 +38,8 @@ struct PhotoPreviewView: View {
                 .scaledToFit()
             
             Spacer()
+        }.fullScreenCover(isPresented: $showResult) {
+            ResultScreen(inputImage: item.image)
         }
     }
     
