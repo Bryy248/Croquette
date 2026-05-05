@@ -6,8 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct NewProjectView: View {
+    @Environment(\.modelContext) var context // DATA
+    @Environment(\.dismiss) var dismiss // DATA
+    
+    @State private var showCamera = false // CAMERA
+    
     @State private var name: String = ""
     @State private var totalRow: Int = 5
     @State private var chain: String = ""
@@ -77,7 +83,20 @@ struct NewProjectView: View {
                 CroqetButton(title: "Save", colorScheme: "button_color") {
                     if name.isEmpty || chain.isEmpty {
                         showingAlert = true
+                    } else {
+                        // data
+                        let newProject = ProjectData(
+                            name: name,
+                            length: Int(chain) ?? 0
+                        )
+                        for _ in 1...totalRow {
+                            let row = Row()
+                            newProject.rows.append(row)
+                        }
+                        context.insert(newProject)
+                        dismiss()
                     }
+                    
                 }
                 .alert("You haven't filled the project details.", isPresented: $showingAlert) {
                     Button("Fill Project Details", role: .cancel) { }
@@ -94,4 +113,5 @@ struct NewProjectView: View {
 
 #Preview {
     NewProjectView()
+        .modelContainer(for: [ProjectData.self, Row.self], inMemory: true)
 }

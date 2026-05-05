@@ -6,22 +6,16 @@
 //
 
 import SwiftUI
-
-// Temporary Model
-struct TemporaryProject: Identifiable {
-    let id = UUID()
-    var name: String
-}
+import SwiftData
 
 struct ContentView: View {
-    // Temporary
-    @State private var projects: [TemporaryProject] = [TemporaryProject(name: "Pouch"), TemporaryProject(name: "Coaster"), TemporaryProject(name: "Pan")]
-    //[]
+    @Query var projects: [ProjectData] // DATA
+    @Environment(\.modelContext) var context // DATA
     
     // Delete function
-    private func deleteProject(_ project: TemporaryProject) {
+    private func deleteProject(_ project: ProjectData) {
         withAnimation {
-            projects.removeAll { $0.id == project.id }
+            context.delete(project)
         }
     }
     
@@ -62,7 +56,7 @@ struct ContentView: View {
                     } else {
                         // Projects List
                         List {
-                            ForEach($projects) { $project in
+                            ForEach(projects) { project in
                                 NavigationLink(destination: ProjectDetailView(project: project)) {
                                     HStack(){
                                         ProjectCard(projects: project) {
@@ -106,4 +100,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .modelContainer(for: [ProjectData.self, Row.self], inMemory: true)
 }

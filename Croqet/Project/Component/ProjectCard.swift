@@ -6,10 +6,17 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ProjectCard: View {
-    let projects: TemporaryProject
+    let projects: ProjectData
     var onDelete: (() -> Void)?
+    
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        return formatter
+    }()
     
     var body: some View {
         VStack(spacing: 10) {
@@ -20,7 +27,7 @@ struct ProjectCard: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             // Date Format
-            Text("10/10/2020")
+            Text(projects.lastModified, formatter: dateFormatter)
                 .font(.system(size:12))
                 .foregroundColor(.gray)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -37,5 +44,6 @@ struct ProjectCard: View {
 }
 
 #Preview {
-    ProjectCard(projects: (TemporaryProject(name: "Pouh")))
+    ProjectCard(projects: (ProjectData(name: "Pouch", length: 10)))
+        .modelContainer(for: [ProjectData.self, Row.self], inMemory: true)
 }
