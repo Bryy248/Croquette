@@ -26,7 +26,7 @@ struct RowCard: View {
                 }
             }
             .font(.system(size: 14))
-            .tint(.gray)
+            .tint(.black)
 
         }
         .padding(.horizontal, 16)

@@ -15,7 +15,7 @@ struct TemporaryProject: Identifiable {
 
 struct ContentView: View {
     // Temporary
-    @State private var projects: [TemporaryProject] = [TemporaryProject(name: "Pouch"), TemporaryProject(name: "Coaster"), TemporaryProject(name: "Cake")]
+    @State private var projects: [TemporaryProject] = [TemporaryProject(name: "Pouch"), TemporaryProject(name: "Coaster"), TemporaryProject(name: "Pan")]
     //[]
     
     // Delete function
@@ -31,14 +31,14 @@ struct ContentView: View {
         NavigationStack {
             ZStack {
                 // Background Color
-                Color("color2")
+                Color("background_color")
                     .ignoresSafeArea()
                 
                 // Main Content
                 VStack(spacing: 0) {
                     // Header
                     Text("Projects")
-                        .font(.system(size: 36, weight: .bold))
+                        .font(.title)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundStyle(.black)
                         .padding(.bottom, 24)
@@ -71,8 +71,8 @@ struct ContentView: View {
                                         
                                         Spacer()
                                         Image(systemName: "chevron.right")
-                                            .font(.system(size: 20, weight: .semibold))
-                                            .foregroundStyle(.color5)
+                                            .font(.subheading)
+                                            .foregroundStyle(.button)
                                             .padding(.trailing, 16)
                                     }
                                     
@@ -89,7 +89,7 @@ struct ContentView: View {
                     }
                     
                     // Button at Bottom
-                    CroqetButton(title: "Add Project", colorScheme: "color5") {
+                    CroqetButton(title: "Add Project", colorScheme: "button_color") {
                         newProjectNavigate = true
                     }
                     .padding(.top, 16)
