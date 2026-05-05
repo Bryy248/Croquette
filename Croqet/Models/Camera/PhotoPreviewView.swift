@@ -10,9 +10,13 @@ import AVFoundation
 
 struct PhotoPreviewView: View {
     @State private var showResult = false
+    @Binding var showCamera: Bool
     
     let item: IdentifiableImage
     let onDismiss: () -> Void
+    
+    let project: ProjectData
+    let rowIndex: Int
     
     var body: some View {
         VStack{
@@ -39,7 +43,7 @@ struct PhotoPreviewView: View {
             
             Spacer()
         }.fullScreenCover(isPresented: $showResult) {
-            ResultScreen(inputImage: item.image)
+            ResultScreen(showCamera: $showCamera, inputImage: item.image, project: project, rowIndex: rowIndex)
         }
     }
     

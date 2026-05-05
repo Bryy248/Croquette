@@ -17,7 +17,8 @@ struct CameraPreview: UIViewRepresentable {
         view.backgroundColor = .white // can be changed(?)
         
         let previewLayer = AVCaptureVideoPreviewLayer(session: session)
-        previewLayer.videoGravity = .resizeAspectFill
+        // previewLayer.videoGravity = .resizeAspectFill
+        previewLayer.videoGravity = .resizeAspect // so preview matched capture
         previewLayer.frame = view.bounds
         view.layer.addSublayer(previewLayer)
         

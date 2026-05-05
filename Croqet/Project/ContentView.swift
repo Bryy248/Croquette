@@ -35,14 +35,15 @@ struct ContentView: View {
                         .font(.title)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundStyle(.black)
-                        .padding(.bottom, 24)
+                        .padding(.leading, 0)
+                        .padding(.bottom, 15)
                     
                     // Content Area
                     if projects.isEmpty {
                         // Empty State
                         Spacer()
                         VStack(spacing: 16) {
-                            Image(systemName: "star")
+                            Image("yarn_pixel")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 100, height: 100)
@@ -83,7 +84,7 @@ struct ContentView: View {
                     }
                     
                     // Button at Bottom
-                    CroqetButton(title: "Add Project", colorScheme: "button_color") {
+                    CroqetButton(title: "+ Add Project", colorScheme: "button_color") {
                         newProjectNavigate = true
                     }
                     .padding(.top, 16)
@@ -102,3 +103,26 @@ struct ContentView: View {
     ContentView()
         .modelContainer(for: [ProjectData.self, Row.self], inMemory: true)
 }
+
+//#Preview {
+//    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+//    let container = try! ModelContainer(for: ProjectData.self, Row.self,
+//                                        configurations: config)
+//    
+//    let p1 = ProjectData(name: "Taplak", length: 24)
+//    p1.rows = [
+//        Row(stitchType: "Single Crochet", progress: 24),
+//        Row(stitchType: "Double Crochet", progress: 12),
+//    ]
+//    container.mainContext.insert(p1)
+//    
+//    let p2 = ProjectData(name: "Scarf", length: 50)
+//    p2.rows = [Row(stitchType: "Single Crochet", progress: 8)]
+//    container.mainContext.insert(p2)
+//    
+//    let p3 = ProjectData(name: "Beanie", length: 80)
+//    container.mainContext.insert(p3)
+//    
+//    return ContentView()
+//        .modelContainer(container)
+//}
