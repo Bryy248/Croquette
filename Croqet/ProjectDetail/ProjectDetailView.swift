@@ -10,27 +10,34 @@ import SwiftData
 
 struct ProjectDetailView: View {
     @Environment(\.modelContext) var context
+    @Environment(\.dismiss) var dismiss
     @State private var isEditing = false
     @State private var draftRows: [Row] = []
+    @State private var newlyAddedRowIndices: Set<Int> = []
     let project: ProjectData
     @State var projectSave = false
+    @State private var showCamera = false
+    @State private var showDiscardAlert = false
     
     func startEditing() {
         draftRows = project.rows.map {
             Row(stitchType: $0.stitchType, progress: $0.progress)
         }
         isEditing = true
+        newlyAddedRowIndices.removeAll()
     }
     
     func cancelEditing() {
         draftRows = []
         isEditing = false
+        newlyAddedRowIndices.removeAll()
     }
     
     func saveEditing() {
         project.rows = draftRows
         isEditing = false
         projectSave = true
+        newlyAddedRowIndices.removeAll()
     }
     
     func deleteRow(_ row: Row) {
@@ -75,14 +82,25 @@ struct ProjectDetailView: View {
                         let rowsToUse = isEditing ? draftRows : project.rows
 
                         ForEach(Array(rowsToUse.enumerated()), id: \.offset) { index, row in
+                            let isNewlyAdded = newlyAddedRowIndices.contains(index)
+                            let isLocked = !isNewlyAdded && index > 0 && (rowsToUse[index - 1].progress < project.length)
+                            let isCompleted = row.progress == project.length
+                            
                             RowProgressCard(
                                 rowNumber: index + 1,
                                 length: project.length,
                                 row: row,
                                 isEditable: isEditing,
-                                onDelete: isEditing ? {
+                                onDelete: (isEditing && !isCompleted) ? {
+                                    if let indexToRemove = newlyAddedRowIndices.first(where: { $0 == index }) {
+                                        newlyAddedRowIndices.remove(indexToRemove)
+                                    }
+                                    // Update indices yang lebih besar dari index yang dihapus
+                                    newlyAddedRowIndices = Set(newlyAddedRowIndices.map { $0 > index ? $0 - 1 : $0 })
                                     draftRows.remove(at: index)
-                                } : nil
+                                } : nil,
+                                isLocked: isLocked,
+                                isCompleted: isCompleted
                             )
                         }
                     } header: {
@@ -97,6 +115,7 @@ struct ProjectDetailView: View {
                                 if isEditing {
                                     Button(action: {
                                         draftRows.append(Row())
+                                        newlyAddedRowIndices.insert(draftRows.count - 1)
                                     }) {
                                         Text("+ Add Row")
                                     }
@@ -114,7 +133,6 @@ struct ProjectDetailView: View {
                 if isEditing {
                     CroqetButton(title: "Save", colorScheme: "button_color") {
                         saveEditing()
-                        
                     }
                     .alert("Project Saved.", isPresented: $projectSave) {
                         Button("Back to Project Details", role: .cancel) {
@@ -124,13 +142,30 @@ struct ProjectDetailView: View {
                 }
                 else {
                     CroqetButton(title: "Get Assistance", colorScheme: "button_color") {
-                        // ke page camera
+                        showCamera = true
+                    }
+                    .fullScreenCover(isPresented: $showCamera) {
+                        CameraView()
                     }
                 }
             }
             .navigationTitle(Text(project.name))
         }
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    if isEditing {
+                        showDiscardAlert = true
+                    }
+                    else {
+                        dismiss()
+                    }
+                })
+                {
+                    Image(systemName: "chevron.left")
+                }
+            }
+            
             ToolbarItem(placement: .navigationBarTrailing) {
                 if !isEditing {
                     Button("Edit") {
@@ -138,6 +173,16 @@ struct ProjectDetailView: View {
                     }
                 }
             }
+        }
+        .navigationBarBackButtonHidden(true)
+        .alert("Unsaved Changes", isPresented: $showDiscardAlert) {
+            Button("Cancel", role: .cancel) { }
+            Button("Discard", role: .destructive) {
+                cancelEditing()
+                dismiss()
+            }
+        } message: {
+            Text("Are you sure you want to continue?")
         }
     }
 }
