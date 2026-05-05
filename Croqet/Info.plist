@@ -4,5 +4,7 @@
 <dict>
 	<key>ROBOFLOW_API_KEY</key>
 	<string>$(ROBOFLOW_API_KEY)</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Croqet uses the camera to analyze your crochet stitches.</string>
 </dict>
 </plist>
