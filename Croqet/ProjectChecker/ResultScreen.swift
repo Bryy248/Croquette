@@ -9,11 +9,12 @@ import SwiftUI
 
 struct ResultScreen:View {
     @State private var selectedView = ""
-    @State private var stitchCounterText = "You have made: 24/24 stitches"
-    @State private var nextHoleFinderText = "Your next hole is pointed out by the red arrow."
+    @State private var stitchCounterText = "Lorem ipsum dolor sit amet."
+    @State private var nextHoleFinderText = "Lorem ipsum dolor sit amet."
     @State private var overlayImage: UIImage?
     
     let views = ["Stitch Counter", "Next Hole Finder"]
+    let inputImage: UIImage
     
     var body: some View {
         VStack(spacing: 20) {
@@ -26,25 +27,14 @@ struct ResultScreen:View {
             
             Spacer()
             
-//            if let overlayImage {
-//                Image(uiImage: overlayImage)
-//                    .resizable()
-//                    .scaledToFit()
-//                    .frame(maxWidth: .infinity)
-//                    .padding(.horizontal)
-//            } else {
-//                Image("test_crochet_1")
-//                    .resizable()
-//                    .scaledToFit()
-//                    .frame(maxWidth: .infinity)
-//                    .padding(.horizontal)
-//            }
-            
-            Image("test_crochet_1")
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal)
+            if let overlayImage {
+                Image(uiImage: overlayImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal)
+            } else {
+            }
             
             Text(selectedView == views[0] ? stitchCounterText : nextHoleFinderText)
                 .multilineTextAlignment(.center)
@@ -56,11 +46,11 @@ struct ResultScreen:View {
                 .padding(.bottom, 30)
         }
         .task {
-            overlayImage = await runCrochetDetection()
+            overlayImage = await runCrochetDetection(image: inputImage)
         }
     }
 }
 
 #Preview {
-    ResultScreen()
+    ResultScreen(inputImage: UIImage(named:"") ?? UIImage())
 }
