@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RowCard: View {
     let rowNumber: Int
-    @State private var selectedOption = "Single Crochet"
+    @Binding var row: RowDraft
     let options = ["Single Crochet", "Double Crochet", "Half Double Crochet"]
     var onDelete: (() -> Void)?
     
@@ -20,7 +20,7 @@ struct RowCard: View {
             
             Spacer()
             
-            Picker("", selection: $selectedOption) {
+            Picker("", selection: $row.stitchType) {
                 ForEach(options, id: \.self) { option in
                     Text(option)
                 }
@@ -43,9 +43,7 @@ struct RowCard: View {
 }
 
 #Preview {
-    VStack(spacing: 8) {
-        ForEach(1...5, id: \.self) { row in
-            RowCard(rowNumber: row)
-        }
-    }
+    @Previewable @State var sampleRow = RowDraft()
+    
+    RowCard(rowNumber: 1, row: $sampleRow)
 }

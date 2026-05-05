@@ -8,6 +8,13 @@
 import SwiftData
 import Foundation
 
+// Model sementara untuk user apabila tidak jadi menyimpan project
+struct RowDraft: Identifiable {
+    let id = UUID()
+    var stitchType: String = "Single Crochet"
+    var progress: Int = 0
+}
+
 @Model
 class ProjectData {
     var name: String
@@ -25,10 +32,12 @@ class ProjectData {
 
 @Model
 class Row {
+    var stitchType: String
     var progress: Int
     // var project: ProjectData?
     
-    init(progress: Int = 0) {
+    init(stitchType: String = "Single Crochet", progress: Int = 0) {
+        self.stitchType = stitchType
         self.progress = progress
     }
 }
