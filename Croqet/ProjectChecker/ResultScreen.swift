@@ -11,42 +11,40 @@ struct ResultScreen:View {
     @State private var selectedView = ""
     @State private var stitchCounterText = "You have made: 24/24 stitches"
     @State private var nextHoleFinderText = "Your next hole is pointed out by the red arrow."
+    @State private var overlayImage: UIImage?
     
     let views = ["Stitch Counter", "Next Hole Finder"]
     
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             Picker("Selected View", selection: $selectedView) {
-                ForEach(views, id: \.self) {
-                    Text($0)
-                }
+                ForEach(views, id: \.self) { Text($0) }
             }
             .pickerStyle(.segmented)
-            .padding()
+            .padding(.horizontal)
+            .padding(.top, 30)
             
             Spacer()
-        }
-        
-        VStack {
-            // image + overlay
             
-            if selectedView == views[0] {
-                Text(stitchCounterText)
-            } else {
-                Text(nextHoleFinderText)
-            }
+            // Image(uiImage: overlayImage)
+            Image("test_crochet_1")
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal)
+            
+            Text(selectedView == views[0] ? stitchCounterText : nextHoleFinderText)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 50)
             
             Spacer()
-        }
-        .padding(50)
-        .multilineTextAlignment(.center)
-        
-        // row dropdown
-        
-        NavigationLink(destination: ContentView()) {
+            
             Text("Back to Projects")
+                .padding(.bottom, 30)
         }
-        Spacer()
+        .task {
+            overlayImage = await runCrochetDetection()
+        }
     }
 }
 
