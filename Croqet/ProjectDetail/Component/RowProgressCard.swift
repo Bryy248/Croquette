@@ -14,6 +14,8 @@ struct RowProgressCard: View {
     let options = ["Single Crochet", "Double Crochet", "Half Double Crochet"]
     var isEditable: Bool
     var onDelete: (() -> Void)?
+    var isLocked: Bool = false  // Row belum bisa diakses
+    var isCompleted: Bool = false  // Row sudah 100%
     
     var progressValue: Double {
         guard length > 0 else { return 0 }
@@ -23,35 +25,63 @@ struct RowProgressCard: View {
     }
     
     var body: some View {
-        VStack() {
-            HStack {
-                Text("Row \(rowNumber)")
-                Spacer()
-                
-                Picker("", selection: $row.stitchType) {
-                    ForEach(options, id: \.self) { option in
-                        Text(option)
+        ZStack {
+            VStack() {
+                HStack {
+                    HStack(spacing: 6) {
+                        Text("Row \(rowNumber)")
+                        
+                        // Lock icon untuk row yang sudah complete
+                        if isCompleted {
+                            Image(systemName: "lock.fill")
+                                .font(.system(size: 14))
+                                .foregroundStyle(.secondary)
+                        }
                     }
+                    
+                    Spacer()
+                    
+                    Picker("", selection: $row.stitchType) {
+                        ForEach(options, id: \.self) { option in
+                            Text(option)
+                        }
+                    }
+                    .disabled(!isEditable || isLocked || isCompleted)
+                    .tint(.black)
+                    .opacity(isLocked ? 0.3 : 1.0)
                 }
-                .disabled(!isEditable)
-                .tint(.black)
+                .font(.subheading)
+                .padding(.bottom, 10)
+                
+                ProgressView(value: progressValue)
+                    .scaleEffect(y: 2, anchor: .center)
+                    .frame(height: 6)
+                    .tint(.button)
+                    .padding(.bottom, 12)
+                
+                Text("\(row.progress)/\(length) stitches")
+                    .font(.system(size: 17, weight: .medium))
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .font(.subheading)
-            .padding(.bottom, 10)
+            .opacity(isLocked ? 0.3 : 1.0)
+            .blur(radius: isLocked ? 2 : 0)
             
-            ProgressView(value: progressValue)
-                .scaleEffect(y: 2, anchor: .center)
-                .frame(height: 6)
-                .tint(.button)
-                .padding(.bottom, 12)
-            
-            Text("\(row.progress)/\(length) stitches")
-                .font(.system(size: 17, weight: .medium))
-                .foregroundColor(.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            // Lock overlay untuk row yang belum bisa diakses
+            if isLocked {
+                VStack(spacing: 8) {
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 40))
+                        .foregroundStyle(.gray)
+                    
+                    Text("Row \(rowNumber)")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundStyle(.gray)
+                }
+            }
         }
         .swipeActions {
-            if isEditable {
+            if isEditable && !isLocked && !isCompleted {
                 Button(role: .destructive) {
                     onDelete?()
                 } label: {
@@ -64,12 +94,35 @@ struct RowProgressCard: View {
 }
 
 #Preview {
-    ForEach(1...5, id: \.self) { index in
+    List {
+        // Active row
         RowProgressCard(
-            rowNumber: index,
+            rowNumber: 1,
+            length: 24,
+            row: Row(progress: 12),
+            isEditable: true,
+            isLocked: false,
+            isCompleted: false
+        )
+        
+        // Locked row (belum bisa diakses)
+        RowProgressCard(
+            rowNumber: 2,
             length: 24,
             row: Row(),
-            isEditable: true
+            isEditable: true,
+            isLocked: true,
+            isCompleted: false
+        )
+        
+        // Completed row
+        RowProgressCard(
+            rowNumber: 3,
+            length: 24,
+            row: Row(progress: 24),
+            isEditable: true,
+            isLocked: false,
+            isCompleted: true
         )
     }
 }
