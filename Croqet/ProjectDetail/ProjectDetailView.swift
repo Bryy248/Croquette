@@ -47,6 +47,37 @@ struct ProjectDetailView: View {
         }
     }
     
+    // bikin handler soalnya ada issue swiftui type-checker overload
+    private func deleteHandler(for index: Int, isCompleted: Bool) -> (() -> Void)? {
+        guard isEditing && !isCompleted else { return nil }
+        return {
+            if let indexToRemove = newlyAddedRowIndices.first(where: { $0 == index }) {
+                newlyAddedRowIndices.remove(indexToRemove)
+            }
+            newlyAddedRowIndices = Set(newlyAddedRowIndices.map { $0 > index ? $0 - 1 : $0
+            })
+            draftRows.remove(at: index)
+        }
+    }
+    
+    @ViewBuilder
+    private func rowCard(index: Int, row: Row, rowsToUse: [Row]) -> some View {
+        let isNewlyAdded = newlyAddedRowIndices.contains(index)
+        let isLocked = !isNewlyAdded && index > 0 && (rowsToUse[index - 1].progress <
+                                                      project.length)
+        let isCompleted = row.progress == project.length
+        
+        RowProgressCard(
+            rowNumber: index + 1,
+            length: project.length,
+            row: row,
+            isEditable: isEditing,
+            onDelete: deleteHandler(for: index, isCompleted: isCompleted),
+            isLocked: isLocked,
+            isCompleted: isCompleted
+        )
+    }
+    
     var body: some View {
         ZStack {
             Color("background_color")
@@ -73,41 +104,28 @@ struct ProjectDetailView: View {
                         .font(.subheading)
                     } header: {
                         Text("Project Details")
-                            .font(.system(size: 24, weight: .semibold))
+                            .font(.heading)
                             .foregroundStyle(.black)
                             .padding(.bottom, 12)
+                            .padding(.leading, -15)
+
                     }
                     
                     Section {
                         let rowsToUse = isEditing ? draftRows : project.rows
-
+                        
                         ForEach(Array(rowsToUse.enumerated()), id: \.offset) { index, row in
-                            let isNewlyAdded = newlyAddedRowIndices.contains(index)
-                            let isLocked = !isNewlyAdded && index > 0 && (rowsToUse[index - 1].progress < project.length)
-                            let isCompleted = row.progress == project.length
-                            
-                            RowProgressCard(
-                                rowNumber: index + 1,
-                                length: project.length,
-                                row: row,
-                                isEditable: isEditing,
-                                onDelete: (isEditing && !isCompleted) ? {
-                                    if let indexToRemove = newlyAddedRowIndices.first(where: { $0 == index }) {
-                                        newlyAddedRowIndices.remove(indexToRemove)
-                                    }
-                                    // Update indices yang lebih besar dari index yang dihapus
-                                    newlyAddedRowIndices = Set(newlyAddedRowIndices.map { $0 > index ? $0 - 1 : $0 })
-                                    draftRows.remove(at: index)
-                                } : nil,
-                                isLocked: isLocked,
-                                isCompleted: isCompleted
-                            )
+                            rowCard(index: index, row: row, rowsToUse: rowsToUse)
+                                .listRowInsets(EdgeInsets(top: 6, leading: 0, bottom: 6, trailing: 0))
                         }
+                        
                     } header: {
                         HStack {
                             Text("Rows")
-                                .font(.system(size: 24, weight: .semibold))
+                                .font(.heading)
                                 .foregroundStyle(.black)
+                                .padding(.bottom, -5)
+                                .padding(.leading, -15)
                             
                             Spacer()
                             
@@ -139,13 +157,14 @@ struct ProjectDetailView: View {
                         }
                     }
                     
-                }
-                else {
+                } else {
                     CroqetButton(title: "Get Assistance", colorScheme: "button_color") {
                         showCamera = true
                     }
                     .fullScreenCover(isPresented: $showCamera) {
-                        CameraView()
+                        let activeRowIndex = project.rows.firstIndex(where: { $0.progress < project.length }) ??
+                        0
+                        CameraView(showCamera: $showCamera, project: project, rowIndex: activeRowIndex)
                     }
                 }
             }
@@ -188,6 +207,6 @@ struct ProjectDetailView: View {
 }
 
 #Preview {
-    ProjectDetailView( project: ProjectData(name: "Taplak", length: 20))
+    ProjectDetailView(project: ProjectData(name: "Taplak", length: 20))
         .modelContainer(for: [ProjectData.self, Row.self], inMemory: true)
 }
