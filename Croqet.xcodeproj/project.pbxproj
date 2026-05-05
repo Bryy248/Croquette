@@ -6,11 +6,23 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5CE99AE72B35B70E87A84C18 /* Pods_Croqet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141B0EE0A2CF62F9F40381E7 /* Pods_Croqet.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		141B0EE0A2CF62F9F40381E7 /* Pods_Croqet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Croqet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		27F245C08B4C1284B11C0C20 /* Pods-Croqet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Croqet.release.xcconfig"; path = "Target Support Files/Pods-Croqet/Pods-Croqet.release.xcconfig"; sourceTree = "<group>"; };
+		D2AC410B82879E8BF92A276D /* Pods-Croqet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Croqet.debug.xcconfig"; path = "Target Support Files/Pods-Croqet/Pods-Croqet.debug.xcconfig"; sourceTree = "<group>"; };
 		DB6458692F9F5BC7004CBED5 /* Croqet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Croqet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		8E99FCCF2FA88972008B6FD7 /* Core */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Core;
+			sourceTree = "<group>";
+		};
 		DB64586B2F9F5BC7004CBED5 /* Croqet */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Croqet;
@@ -23,17 +35,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CE99AE72B35B70E87A84C18 /* Pods_Croqet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04EC23F50409065357DF721D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D2AC410B82879E8BF92A276D /* Pods-Croqet.debug.xcconfig */,
+				27F245C08B4C1284B11C0C20 /* Pods-Croqet.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		1C8EEC4782D1EAF9DF2AB7D7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				141B0EE0A2CF62F9F40381E7 /* Pods_Croqet.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DB6458602F9F5BC7004CBED5 = {
 			isa = PBXGroup;
 			children = (
 				DB64586B2F9F5BC7004CBED5 /* Croqet */,
 				DB64586A2F9F5BC7004CBED5 /* Products */,
+				8E99FCCF2FA88972008B6FD7 /* Core */,
+				04EC23F50409065357DF721D /* Pods */,
+				1C8EEC4782D1EAF9DF2AB7D7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -52,20 +85,21 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DB6458742F9F5BC8004CBED5 /* Build configuration list for PBXNativeTarget "Croqet" */;
 			buildPhases = (
+				BD5B2BCAD2AB4D1FF5BC975C /* [CP] Check Pods Manifest.lock */,
 				DB6458652F9F5BC7004CBED5 /* Sources */,
 				DB6458662F9F5BC7004CBED5 /* Frameworks */,
 				DB6458672F9F5BC7004CBED5 /* Resources */,
+				636606C5EFF727B3777D50AC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				8E99FCCF2FA88972008B6FD7 /* Core */,
 				DB64586B2F9F5BC7004CBED5 /* Croqet */,
 			);
 			name = Croqet;
-			packageProductDependencies = (
-			);
 			productName = Croquette;
 			productReference = DB6458692F9F5BC7004CBED5 /* Croqet.app */;
 			productType = "com.apple.product-type.application";
@@ -113,6 +147,52 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		636606C5EFF727B3777D50AC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Croqet/Pods-Croqet-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Croqet/Pods-Croqet-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Croqet/Pods-Croqet-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BD5B2BCAD2AB4D1FF5BC975C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Croqet-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DB6458652F9F5BC7004CBED5 /* Sources */ = {
@@ -162,7 +242,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -177,7 +257,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -225,7 +305,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -234,7 +314,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -246,12 +326,13 @@
 		};
 		DB6458752F9F5BC8004CBED5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D2AC410B82879E8BF92A276D /* Pods-Croqet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = BPKZ3792AR;
+				DEVELOPMENT_TEAM = X343JBU8CX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -264,7 +345,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Brian.Croquette;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Croquette;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -278,12 +359,13 @@
 		};
 		DB6458762F9F5BC8004CBED5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27F245C08B4C1284B11C0C20 /* Pods-Croqet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = BPKZ3792AR;
+				DEVELOPMENT_TEAM = X343JBU8CX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -296,7 +378,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Brian.Croquette;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Croquette;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
