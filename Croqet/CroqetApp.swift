@@ -14,6 +14,6 @@ struct CroqetApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: [ProjectData.self, Row.self])
+         .modelContainer(for: [ProjectData.self, Row.self])
     }
 }
