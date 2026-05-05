@@ -16,7 +16,7 @@ struct CroqetButton: View {
         Button(action: action) {
             Text(title)
                 .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(.white)
+                .foregroundColor(.font)
                 .frame(width: 361,height: 48)
                 .background(Color(colorScheme))
                 .cornerRadius(12)
