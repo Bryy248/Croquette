@@ -26,7 +26,20 @@ struct ResultScreen:View {
             
             Spacer()
             
-            // Image(uiImage: overlayImage)
+//            if let overlayImage {
+//                Image(uiImage: overlayImage)
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(maxWidth: .infinity)
+//                    .padding(.horizontal)
+//            } else {
+//                Image("test_crochet_1")
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(maxWidth: .infinity)
+//                    .padding(.horizontal)
+//            }
+            
             Image("test_crochet_1")
                 .resizable()
                 .scaledToFit()
