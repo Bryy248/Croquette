@@ -41,15 +41,24 @@ struct RowProgressCard: View {
                     
                     Spacer()
                     
-                    Picker("", selection: $row.stitchType) {
-                        ForEach(options, id: \.self) { option in
-                            Text(option).font(.subheading)
-                        }
+                    if isCompleted || row.progress > 0 {
+                        // Tampilkan sebagai teks biasa saat editable
+                        Text(row.stitchType)
+                            .font(.subheading)
+                            .foregroundStyle(.black)
                     }
-                    .font(.subheading)
-                    .disabled(!isEditable || isLocked || isCompleted)
-                    .tint(.black)
-                    .opacity(isLocked ? 0.3 : 1.0)
+                    else {
+                        // Tampilkan picker saat tidak editable
+                        Picker("", selection: $row.stitchType) {
+                            ForEach(options, id: \.self) { option in
+                                Text(option).font(.subheading)
+                            }
+                        }
+                        .font(.subheading)
+                        .disabled(isLocked || isCompleted)
+                        .tint(.black)
+                        .opacity(isLocked ? 0.3 : 1.0)
+                    }
                 }
                 .font(.subheading)
                 .padding(.bottom, 10)

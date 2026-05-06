@@ -84,7 +84,7 @@ struct ContentView: View {
                     }
                     
                     // Button at Bottom
-                    CroqetButton(title: "+ Add Project", colorScheme: "button_color") {
+                    CroqetButton(title: "Add Project", colorScheme: "button_color") {
                         newProjectNavigate = true
                     }
                     .padding(.top, 16)
