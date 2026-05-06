@@ -25,6 +25,7 @@ struct ProjectDetailView: View {
         }
         isEditing = true
         newlyAddedRowIndices.removeAll()
+        projectSave = false
     }
     
     func cancelEditing() {
@@ -108,7 +109,7 @@ struct ProjectDetailView: View {
                             .foregroundStyle(.black)
                             .padding(.bottom, 12)
                             .padding(.leading, -15)
-
+                        
                     }
                     
                     Section {
@@ -152,12 +153,9 @@ struct ProjectDetailView: View {
                     CroqetButton(title: "Save", colorScheme: "button_color") {
                         saveEditing()
                     }
-                    .alert("Project Saved.", isPresented: $projectSave) {
-                        Button("Back to Project Details", role: .cancel) {
-                        }
-                    }
                     
-                } else {
+                }
+                else {
                     CroqetButton(title: "Get Assistance", colorScheme: "button_color") {
                         showCamera = true
                     }
@@ -166,6 +164,10 @@ struct ProjectDetailView: View {
                         0
                         CameraView(showCamera: $showCamera, project: project, rowIndex: activeRowIndex)
                     }
+                }
+            }
+            .alert("Project Saved.", isPresented: $projectSave) {
+                Button("Back to Project Details", role: .cancel) {
                 }
             }
             .navigationTitle(Text(project.name))
