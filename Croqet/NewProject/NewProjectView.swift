@@ -18,9 +18,11 @@ struct NewProjectView: View {
     @State private var rows: [RowDraft] = [RowDraft()]
     
     @State private var navigateToDetail = false
+    @State var projectSave = false
     @State private var createdProject: ProjectData?
+    @State private var validationError: String?
+    @FocusState private var isLengthFieldFocused: Bool
     
-    @State private var showingAlert = false
     var body: some View {
 //        NavigationStack {
             ZStack {
@@ -34,6 +36,11 @@ struct NewProjectView: View {
                                 Text("Name")
                                 TextField("New Project", text: $name)
                                     .multilineTextAlignment(.trailing)
+                                    .onChange(of: name) { _, _ in
+                                        if !name.isEmpty {
+                                            validationError = nil
+                                        }
+                                    }
                             }
                             .font(.subheading)
                             HStack {
@@ -41,9 +48,14 @@ struct NewProjectView: View {
                                 Spacer()
                                 TextField("", text: $chain)
                                     .multilineTextAlignment(.trailing)
-                                    .keyboardType(.numberPad)
                                     .textFieldStyle(.roundedBorder)
                                     .frame(width: 52, height: 25)
+                                    .focused($isLengthFieldFocused)
+                                    .onChange(of: chain) { _, _ in
+                                        if !chain.isEmpty {
+                                            validationError = nil
+                                        }
+                                    }
                                 Text("chains")
                                     .foregroundStyle(.secondary)
                             }
@@ -54,6 +66,13 @@ struct NewProjectView: View {
                                 .foregroundStyle(.black)
                                 .padding(.bottom, 12)
                                 .padding(.leading, -15)
+                        } footer: {
+                            if let error = validationError {
+                                Text(error)
+                                    .font(.bodyText)
+                                    .foregroundStyle(.red)
+                                    .padding(.top, 4)
+                            }
                         }
 
                         Section {
@@ -95,10 +114,31 @@ struct NewProjectView: View {
                     
                     Spacer()
                     CroqetButton(title: "Save", colorScheme: "button_color") {
-                        if name.isEmpty || chain.isEmpty {
-                            showingAlert = true
+                        // Validasi
+                        if name.isEmpty && chain.isEmpty {
+                            validationError = "Please fill in both Name and Length."
+                        }
+                        else if name.isEmpty {
+                            validationError = "Please fill in the Name."
+                        }
+                        else if name.count > 20 {
+                            validationError = "Name must be 20 characters or less."
+                        }
+                        else if chain.isEmpty {
+                            validationError = "Please fill in the Length."
+                        }
+                        else if Int(chain) == nil {
+                            validationError = "Length must be a number."
+                        }
+                        else if let chainValue = Int(chain), chainValue == 0 {
+                            validationError = "Length must be greater than 0."
+                        }
+                        else if let chainValue = Int(chain), chainValue > 100 {
+                            validationError = "Length must be less than 100."
                         }
                         else {
+                            validationError = nil
+                            
                             // data
                             let newProject = ProjectData(
                                 name: name,
@@ -113,14 +153,14 @@ struct NewProjectView: View {
                             }
                             context.insert(newProject)
                             createdProject = newProject
-                            navigateToDetail = true
+                            projectSave = true
                         }
                         
                     }
-                    .alert("You haven't filled the project details.", isPresented: $showingAlert) {
-                        Button("Fill Project Details", role: .cancel) { }
-                    } message: {
-                        Text("Fill them before continuing.")
+                    .alert("Project Saved.", isPresented: $projectSave) {
+                        Button("Go to Project Details", role: .cancel) {
+                            navigateToDetail = true
+                        }
                     }
                     
                 }
