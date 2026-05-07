@@ -35,24 +35,21 @@ struct ResultScreen:View {
                     .onChange(of: selectedView) { _, _ in updateOverlay() }
                     .padding(.horizontal, 24)
                     .padding(.top, 16)
-
+                    
                     if let overlayImage {
-                        Image(uiImage: overlayImage)
-                              .resizable()
-                              .scaledToFill()
-                              .frame(width: 330, height: 320)
-                              .clipped()
-                              .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                              .allowsHitTesting(false)
-                            .padding(.horizontal, 24)
+                        ZoomableImage(image: overlayImage)
+                            .scaledToFill()
+                            .frame(width: 330, height: 320)
+                            .clipped()
+                            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                     }
-
+                    
                     Text(resultMessage)
                         .font(.subheading)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 50)
                         .fixedSize(horizontal: false, vertical: true)
-
+                    
                     if rowIndex < project.rows.count {
                         RowProgressCard(
                             rowNumber: rowIndex + 1,
@@ -64,9 +61,9 @@ struct ResultScreen:View {
                         .cornerRadius(26)
                         .padding(.horizontal, 24)
                     }
-
+                    
                     Spacer(minLength: 0)
-
+                    
                     Button("Back to Project Details") {
                         showCamera = false
                     }
@@ -128,7 +125,7 @@ struct ResultScreen:View {
                 let shown = min(count, project.length)
                 return "You have made: \(shown)/\(project.length) stitches"
             }
-
+            
         } else {
             if nextHole(predictions) == nil {
                 return "No stitches detected. Try better lighting or a closer shot."
