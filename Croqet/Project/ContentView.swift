@@ -19,10 +19,10 @@ struct ContentView: View {
         }
     }
     
-    @State private var newProjectNavigate: Bool = false
+    @State private var navigationPath = NavigationPath()
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             ZStack {
                 // Background Color
                 Color("background_color")
@@ -85,15 +85,19 @@ struct ContentView: View {
                     
                     // Button at Bottom
                     CroqetButton(title: "Add Project", colorScheme: "button_color") {
-                        newProjectNavigate = true
+                        navigationPath.append("NewProject")
                     }
                     .padding(.top, 16)
                 }
                 .padding(16)
             }
-            .navigationDestination(isPresented: $newProjectNavigate) {
-                NewProjectView()
-                
+            .navigationDestination(for: String.self) { value in
+                if value == "NewProject" {
+                    NewProjectView(navigationPath: $navigationPath)
+                }
+            }
+            .navigationDestination(for: ProjectData.self) { project in
+                ProjectDetailView(project: project, navigationPath: $navigationPath)
             }
         }
     }

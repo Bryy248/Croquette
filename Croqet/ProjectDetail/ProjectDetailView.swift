@@ -18,6 +18,7 @@ struct ProjectDetailView: View {
     @State var projectSave = false
     @State private var showCamera = false
     @State private var showDiscardAlert = false
+    var navigationPath: Binding<NavigationPath>?
     
     func startEditing() {
         draftRows = project.rows.map {
@@ -179,7 +180,13 @@ struct ProjectDetailView: View {
                         showDiscardAlert = true
                     }
                     else {
-                        dismiss()
+                        // Jika ada navigationPath (dari new project), clear semua navigation
+                        if let navPath = navigationPath {
+                            navPath.wrappedValue.removeLast(navPath.wrappedValue.count)
+                        } else {
+                            // Normal dismiss untuk navigasi dari list
+                            dismiss()
+                        }
                     }
                 })
                 {
@@ -200,7 +207,11 @@ struct ProjectDetailView: View {
             Button("Cancel", role: .cancel) { }
             Button("Discard", role: .destructive) {
                 cancelEditing()
-                dismiss()
+                if let navPath = navigationPath {
+                    navPath.wrappedValue.removeLast(navPath.wrappedValue.count)
+                } else {
+                    dismiss()
+                }
             }
         } message: {
             Text("Are you sure you want to continue?")
