@@ -46,15 +46,23 @@ struct ContentView: View {
                             Image("yarn_pixel")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 100, height: 100)
+                                .frame(width: 142, height: 99)
                                 .foregroundStyle(.secondary)
                             
                             Text("You have no projects yet")
                                 .font(.system(size: 24, weight: .semibold))
                                 .foregroundStyle(.primary)
+                            
+                            Text("Start your first crochet and track your progress here")
+                                .font(.system(size: 17, weight: .semibold))
+                                .foregroundStyle(.gray)
+                                .multilineTextAlignment(.center)
+                                .frame(maxWidth: .infinity)
                         }
+                        .padding(.horizontal, 32)
                         Spacer()
-                    } else {
+                    }
+                    else {
                         // Projects List
                         List {
                             ForEach(projects) { project in
