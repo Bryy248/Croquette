@@ -64,12 +64,9 @@ struct ResultScreen:View {
                     
                     Spacer(minLength: 0)
                     
-                    Button("Back to Project Details") {
+                    CroqetButton(title: "Save", colorScheme: "button_color") {
                         showCamera = false
                     }
-                    .font(.bodyText)
-                    .foregroundStyle(.secondary)
-                    .padding(.bottom, 30)
                 }
                 .opacity(isLoading ? 0 : 1)
                 .overlay {

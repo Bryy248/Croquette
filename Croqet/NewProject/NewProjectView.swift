@@ -12,6 +12,7 @@ struct NewProjectView: View {
     
     @Environment(\.modelContext) var context // DATA
     @Environment(\.dismiss) var dismiss // DATA
+    @Binding var navigationPath: NavigationPath
     
     @State private var name: String = ""
     @State private var chain: String = ""
@@ -159,23 +160,19 @@ struct NewProjectView: View {
                     }
                     .alert("Project Saved.", isPresented: $projectSave) {
                         Button("Go to Project Details", role: .cancel) {
-                            navigateToDetail = true
+                            navigationPath.append(createdProject!)
                         }
                     }
                     
                 }
                 .navigationTitle(Text("New Project"))
-                .navigationDestination(isPresented: $navigateToDetail) {
-                    if let project = createdProject {
-                        ProjectDetailView(project: project)
-                    }
-                }
             }
 //        }
     }
 }
 
 #Preview {
-    NewProjectView()
+    @Previewable @State var path = NavigationPath()
+    NewProjectView(navigationPath: $path)
         .modelContainer(for: [ProjectData.self, Row.self], inMemory: true)
 }
